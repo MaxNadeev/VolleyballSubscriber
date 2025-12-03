@@ -35,10 +35,24 @@ export async function main() {
       return 'NO_NEW_POSTS';
     }
 
+    // Получаем комментарии (от старых к новым)
     const comments = await getPostComments(GROUP_ID, postId);
+
+    // Проверяем первый комментарий
+    const firstComment = comments.length > 0 ? comments[0].text : '';
+
+    // Регулярное выражение для проверки наличия цифры 1
+    const regex = /1/;
+
+    if (!regex.test(firstComment)) {
+      // Если цифры 1 в первом комментарии нет - ждем появления подходящего комментария
+      console.log("First comment doesn't include digit 1, post is not game announce.");
+      return 'NO_NEW_POSTS';
+    }
+
+    // Проверяем, записан ли уже пользователь
     const wroteSelf = comments.some(c => c.author_id === MY_ID);
 
-    // Если ты уже записан — просто логируем
     if (wroteSelf) {
       const now = new Date();
       console.log(`[${now.toLocaleString('ru-RU')}] Already signed in game`);
@@ -51,7 +65,7 @@ export async function main() {
     // Формируем ссылку на пост
     const postLink = `https://vk.com/wall-${GROUP_ID}_${postId}`;
 
-    // Формируем текст комментария (addComment возвращает текст)
+    // Формируем текст комментария
     const commentText = await addComment(postId, nextNumber - 1);
 
     // Формируем текст для Telegram
@@ -66,3 +80,4 @@ export async function main() {
     return 'ERROR';
   }
 }
+
