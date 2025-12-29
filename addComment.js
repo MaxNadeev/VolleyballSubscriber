@@ -17,10 +17,6 @@ export async function addComment(postId, maxSequential) {
     commentText = `${maxSequential + 1} резерв`;
   }
 
-  console.log('💬 Text of comment for sending:', commentText);
-
-
-  
   try {
     const ownerId = -Math.abs(Number(process.env.VK_GROUP_ID)); // ID сообщества
     const url = 'https://api.vk.com/method/wall.createComment';
@@ -34,12 +30,12 @@ export async function addComment(postId, maxSequential) {
 
     const response = await axios.get(url, { params });
     if (response.data.response) {
-      console.log('✅ Comment successfully sent! ID:', response.data.response.comment_id);
+      console.log(`[${now.toLocaleString('ru-RU')}] ✅ Comment successfully sent! ID: ${response.data.response.comment_id}`);
     } else {
-      console.error('⚠️ Error when sending comment:', response.data.error);
+      console.error(`[${now.toLocaleString('ru-RU')}] ⚠️ Error when sending comment: ${response.data.error}`);
     }
   } catch (error) {
-    console.error('❌ Query error:', error.message);
+    console.error(`[${now.toLocaleString('ru-RU')}] ❌ Query error: ${error.message}`);
   }
 
   return commentText;

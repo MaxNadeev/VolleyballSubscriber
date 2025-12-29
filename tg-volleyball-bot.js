@@ -108,8 +108,8 @@ bot.on('message', async (msg) => {
 export async function sendTgMessage(message) {
   try {
     await bot.sendMessage(CHAT_ID, message, replyKeyboard);
-    console.log('📨 Message sent in Telegram:', message);
+    console.log(`[${now.toLocaleString('ru-RU')}] 📨 Message sent in Telegram: ${message}`);
   } catch (error) {
-    console.error('❌ Error during send in Telegram:', error.message);
+    console.error(`[${now.toLocaleString('ru-RU')}] ❌ Error during send in Telegram: ${error.message}`);
   }
 }

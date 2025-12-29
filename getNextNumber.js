@@ -4,7 +4,6 @@
  * @returns {number} - следующий номер для записи
  */
 export function getNextNumber(comments) {
-    console.log('🔢 Comments :', comments);
     if (comments.length === 0) return 1; // Если комментариев нет, возвращаем 1
   // Извлекаем все числа из комментариев
   const numbers = comments
@@ -16,15 +15,16 @@ export function getNextNumber(comments) {
     .sort((a, b) => a - b);
 
   // Находим пропущенное число в последовательности
-  const maxNumber = numbers.length ? Math.max(...numbers) : 0;
-  let missingNumber = null;
-  for (let i = 1; i <= maxNumber; i++) {
-    if (!numbers.includes(i)) {
-      missingNumber = i;
-      break;
-    }
+  const numberSet = new Set(numbers);
+  let missing = null;
+
+  for (let i = 1; i <= Math.max(...numbers); i++) {
+      if (!numberSet.has(i)) {
+          missing = i;
+          break;
+      }
   }
 
-  const maxSequential = missingNumber || maxNumber;
-  return maxSequential + 1; // Следующий номер
+  // missing содержит пропущенное число или null
+  return missing !== null ? missing : Math.max(...numbers) + 1;
 }

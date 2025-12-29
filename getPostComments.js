@@ -8,7 +8,7 @@ export async function getPostComments(groupId, postId) {
   // Для групп owner_id = -GROUP_ID
   const ownerId = -Math.abs(Number(groupId));
 
-  console.log(`🔍 Fetching comments for post ${postId} in group ${ownerId}`);
+  console.log(`[${now.toLocaleString('ru-RU')}]🔍 Fetching comments for post ${postId} in group ${ownerId}`);
 
   const { data } = await axios.get('https://api.vk.com/method/wall.getComments', {
     params: {
@@ -22,7 +22,7 @@ export async function getPostComments(groupId, postId) {
   });
 
   if (data.error) {
-    console.error('⚠️ Ошибка VK API:', data.error);
+    console.error(`[${now.toLocaleString('ru-RU')}] ⚠️ Ошибка VK API: ${data.error}`);
     return [];
   }
 

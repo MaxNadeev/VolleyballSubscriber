@@ -31,7 +31,7 @@ export async function main() {
 
     // Проверяем, сегодняшний ли пост
     if (!isToday(date)) {
-      console.log('No new posts');
+      console.log(`[${now.toLocaleString('ru-RU')}] No new posts`);
       return 'NO_NEW_POSTS';
     }
 
@@ -46,7 +46,7 @@ export async function main() {
 
     if (!regex.test(firstComment)) {
       // Если цифры 1 в первом комментарии нет - ждем появления подходящего комментария
-      console.log("First comment doesn't include digit 1, post is not game announce.");
+      console.log(`[${now.toLocaleString('ru-RU')}] First comment doesn't include digit 1, post is not game announce.`);
       return 'NO_NEW_POSTS';
     }
 
@@ -76,7 +76,7 @@ export async function main() {
 
     return 'SIGNED';
   } catch (error) {
-    console.error(`❌ Unexpected error in main(): ${error.message}`);
+    console.error(`[${now.toLocaleString('ru-RU')}] ❌ Unexpected error in main(): ${error.message}`);
     return 'ERROR';
   }
 }
